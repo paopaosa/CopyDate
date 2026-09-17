@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute name="xml:space" type="preserve" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <data name="AppName" xml:space="preserve"><value>CopyDate</value></data>
+  <data name="TrayTooltip" xml:space="preserve"><value>CopyDate — 點一下即可複製 {0}</value></data>
+  <data name="CopiedTitle" xml:space="preserve"><value>CopyDate</value></data>
+  <data name="CopiedText" xml:space="preserve"><value>已複製 {0}</value></data>
+  <data name="CopyFailed" xml:space="preserve"><value>無法寫入剪貼簿，可能正被其他程式占用。</value></data>
+  <data name="MenuSettings" xml:space="preserve"><value>設定</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>關於</value></data>
+  <data name="MenuExit" xml:space="preserve"><value>結束</value></data>
+  <data name="SettingsTitle" xml:space="preserve"><value>設定</value></data>
+  <data name="Language" xml:space="preserve"><value>語言</value></data>
+  <data name="LanguageSystem" xml:space="preserve"><value>跟隨系統</value></data>
+  <data name="LanguageZh" xml:space="preserve"><value>简体中文</value></data>
+  <data name="LanguageZhHant" xml:space="preserve"><value>繁體中文</value></data>
+  <data name="LanguageEn" xml:space="preserve"><value>English</value></data>
+  <data name="TrayIconStyle" xml:space="preserve"><value>工作列圖示樣式</value></data>
+  <data name="TrayIconStyleRed" xml:space="preserve"><value>紅字白底（預設）</value></data>
+  <data name="TrayIconStyleGray" xml:space="preserve"><value>淺黑字淺灰底</value></data>
+  <data name="TrayIconStyleBlue" xml:space="preserve"><value>深藍底白字</value></data>
+  <data name="DefaultFormat" xml:space="preserve"><value>左鍵預設格式</value></data>
+  <data name="BuiltInFormats" xml:space="preserve"><value>內建格式</value></data>
+  <data name="CustomFormats" xml:space="preserve"><value>自訂格式</value></data>
+  <data name="Add" xml:space="preserve"><value>新增</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Name" xml:space="preserve"><value>名稱</value></data>
+  <data name="Pattern" xml:space="preserve"><value>格式</value></data>
+  <data name="Preview" xml:space="preserve"><value>預覽</value></data>
+  <data name="StartWithWindows" xml:space="preserve"><value>開機時啟動</value></data>
+  <data name="ShowNotification" xml:space="preserve"><value>複製後顯示通知</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="CustomFormatTitle" xml:space="preserve"><value>自訂格式</value></data>
+  <data name="InvalidPattern" xml:space="preserve"><value>日期格式字串無效。</value></data>
+  <data name="NameRequired" xml:space="preserve"><value>請輸入名稱。</value></data>
+  <data name="PatternRequired" xml:space="preserve"><value>請輸入格式字串。</value></data>
+  <data name="PatternHelp" xml:space="preserve"><value>請使用 .NET 日期時間格式，例如 yyyy-MM-dd 或 dddd。</value></data>
+  <data name="AboutTitle" xml:space="preserve"><value>關於 CopyDate</value></data>
+  <data name="AboutVersion" xml:space="preserve"><value>版本 {0}</value></data>
+  <data name="AboutFree" xml:space="preserve"><value>CopyDate 免費使用，不會蒐集資料，也不會連線網路。</value></data>
+  <data name="AboutPrivacy" xml:space="preserve"><value>設定只會儲存在這台電腦。</value></data>
+  <data name="AlreadyRunning" xml:space="preserve"><value>CopyDate 已在執行中。</value></data>
+  <data name="StartupDisabledByUser" xml:space="preserve"><value>開機啟動已在 Windows 設定中被關閉。請到「設定 &gt; 應用程式 &gt; 啟動」重新開啟。</value></data>
+  <data name="StartupUnavailable" xml:space="preserve"><value>無法變更開機啟動設定。</value></data>
+  <data name="Ok" xml:space="preserve"><value>確定</value></data>
+  <data name="ConfirmDelete" xml:space="preserve"><value>要刪除此自訂格式嗎？</value></data>
+  <data name="SelectCustomFormat" xml:space="preserve"><value>請先選取一個自訂格式。</value></data>
+</root>

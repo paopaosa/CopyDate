@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute name="xml:space" type="preserve" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <data name="AppName" xml:space="preserve"><value>CopyDate</value></data>
+  <data name="TrayTooltip" xml:space="preserve"><value>CopyDate — click to copy {0}</value></data>
+  <data name="CopiedTitle" xml:space="preserve"><value>CopyDate</value></data>
+  <data name="CopiedText" xml:space="preserve"><value>Copied {0}</value></data>
+  <data name="CopyFailed" xml:space="preserve"><value>Could not copy to the clipboard. It may be in use.</value></data>
+  <data name="MenuSettings" xml:space="preserve"><value>Settings</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>About</value></data>
+  <data name="MenuExit" xml:space="preserve"><value>Exit</value></data>
+  <data name="SettingsTitle" xml:space="preserve"><value>Settings</value></data>
+  <data name="Language" xml:space="preserve"><value>Language</value></data>
+  <data name="LanguageSystem" xml:space="preserve"><value>Follow system</value></data>
+  <data name="LanguageZh" xml:space="preserve"><value>简体中文</value></data>
+  <data name="LanguageZhHant" xml:space="preserve"><value>繁體中文</value></data>
+  <data name="LanguageEn" xml:space="preserve"><value>English</value></data>
+  <data name="TrayIconStyle" xml:space="preserve"><value>Tray icon style</value></data>
+  <data name="TrayIconStyleRed" xml:space="preserve"><value>Red on white (default)</value></data>
+  <data name="TrayIconStyleGray" xml:space="preserve"><value>Soft black on light gray</value></data>
+  <data name="TrayIconStyleBlue" xml:space="preserve"><value>White on dark blue</value></data>
+  <data name="DefaultFormat" xml:space="preserve"><value>Default left-click format</value></data>
+  <data name="BuiltInFormats" xml:space="preserve"><value>Built-in formats</value></data>
+  <data name="CustomFormats" xml:space="preserve"><value>Custom formats</value></data>
+  <data name="Add" xml:space="preserve"><value>Add</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Name" xml:space="preserve"><value>Name</value></data>
+  <data name="Pattern" xml:space="preserve"><value>Pattern</value></data>
+  <data name="Preview" xml:space="preserve"><value>Preview</value></data>
+  <data name="StartWithWindows" xml:space="preserve"><value>Start with Windows</value></data>
+  <data name="ShowNotification" xml:space="preserve"><value>Show a notification after copying</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="CustomFormatTitle" xml:space="preserve"><value>Custom format</value></data>
+  <data name="InvalidPattern" xml:space="preserve"><value>This date format pattern is invalid.</value></data>
+  <data name="NameRequired" xml:space="preserve"><value>Please enter a name.</value></data>
+  <data name="PatternRequired" xml:space="preserve"><value>Please enter a pattern.</value></data>
+  <data name="PatternHelp" xml:space="preserve"><value>Use .NET date/time format strings, for example yyyy-MM-dd or dddd.</value></data>
+  <data name="AboutTitle" xml:space="preserve"><value>About CopyDate</value></data>
+  <data name="AboutVersion" xml:space="preserve"><value>Version {0}</value></data>
+  <data name="AboutFree" xml:space="preserve"><value>CopyDate is free. It does not collect data or access the network.</value></data>
+  <data name="AboutPrivacy" xml:space="preserve"><value>Settings are stored only on this PC.</value></data>
+  <data name="AlreadyRunning" xml:space="preserve"><value>CopyDate is already running.</value></data>
+  <data name="StartupDisabledByUser" xml:space="preserve"><value>Startup was disabled in Windows Settings. You can turn it on under Settings &gt; Apps &gt; Startup.</value></data>
+  <data name="StartupUnavailable" xml:space="preserve"><value>Could not change the startup setting.</value></data>
+  <data name="Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="ConfirmDelete" xml:space="preserve"><value>Delete this custom format?</value></data>
+  <data name="SelectCustomFormat" xml:space="preserve"><value>Please select a custom format.</value></data>
+</root>

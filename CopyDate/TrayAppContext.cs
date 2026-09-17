@@ -1,0 +1,228 @@
+using System.ComponentModel;
+
+namespace CopyDate;
+
+internal sealed class TrayAppContext : ApplicationContext
+{
+    private readonly RegisteredWaitHandle _activateWait;
+    private readonly SynchronizationContext _ui;
+    private readonly NotifyIcon _notifyIcon;
+    private readonly ContextMenuStrip _menu;
+    private Icon _icon;
+    private readonly System.Windows.Forms.Timer _dateTimer;
+    private DateTime _iconDate;
+    private AppSettings _settings;
+    private bool _settingsOpen;
+    private bool _aboutOpen;
+
+    public TrayAppContext(AppSettings settings, EventWaitHandle activateEvent)
+    {
+        _settings = settings;
+        _ui = SynchronizationContext.Current ?? new WindowsFormsSynchronizationContext();
+        _iconDate = DateTime.Today;
+        _icon = AppIcon.CreateForTray(_iconDate, _settings.TrayIconStyle);
+        _menu = new ContextMenuStrip();
+        _menu.Opening += MenuOnOpening;
+
+        _notifyIcon = new NotifyIcon
+        {
+            Icon = _icon,
+            Visible = true,
+            ContextMenuStrip = _menu,
+            Text = UiStrings.AppName
+        };
+        _notifyIcon.MouseClick += NotifyIconOnMouseClick;
+
+        UpdateTooltip();
+
+        _dateTimer = new System.Windows.Forms.Timer { Interval = 60_000 };
+        _dateTimer.Tick += (_, _) => RefreshTrayIconIfDateChanged();
+        _dateTimer.Start();
+
+        _activateWait = ThreadPool.RegisterWaitForSingleObject(
+            activateEvent,
+            OnSecondInstance,
+            null,
+            Timeout.Infinite,
+            executeOnlyOnce: false);
+    }
+
+    private void OnSecondInstance(object? state, bool timedOut)
+    {
+        _ui.Post(_ => ShowAlreadyRunningBalloon(), null);
+    }
+
+    private void ShowAlreadyRunningBalloon()
+    {
+        if (!_notifyIcon.Visible)
+        {
+            return;
+        }
+
+        _notifyIcon.BalloonTipTitle = UiStrings.AppName;
+        _notifyIcon.BalloonTipText = UiStrings.AlreadyRunning;
+        _notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+        _notifyIcon.ShowBalloonTip(2000);
+    }
+
+    private void NotifyIconOnMouseClick(object? sender, MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
+        {
+            CopyDefault();
+        }
+    }
+
+    private void MenuOnOpening(object? sender, CancelEventArgs e)
+    {
+        RebuildMenu();
+    }
+
+    private void RebuildMenu()
+    {
+        _menu.Items.Clear();
+        DateTime now = DateTime.Now;
+
+        foreach (DateFormatDefinition format in DateFormatCatalog.VisibleFormats(_settings))
+        {
+            string preview = DateFormatCatalog.Format(format.Pattern, now);
+            string pattern = format.Pattern;
+            var item = new ToolStripMenuItem(preview);
+            item.Click += (_, _) => CopyText(DateFormatCatalog.FormatNow(pattern));
+            _menu.Items.Add(item);
+        }
+
+        if (_menu.Items.Count > 0)
+        {
+            _menu.Items.Add(new ToolStripSeparator());
+        }
+
+        _menu.Items.Add(UiStrings.MenuSettings, null, (_, _) => OpenSettings());
+        _menu.Items.Add(UiStrings.MenuAbout, null, (_, _) => OpenAbout());
+        _menu.Items.Add(new ToolStripSeparator());
+        _menu.Items.Add(UiStrings.MenuExit, null, (_, _) => ExitThread());
+    }
+
+    private void CopyDefault()
+    {
+        string pattern = DateFormatCatalog.ResolvePattern(_settings, _settings.DefaultFormatId)
+            ?? DateFormatCatalog.BuiltIn[0].Pattern;
+        CopyText(DateFormatCatalog.FormatNow(pattern));
+    }
+
+    private void CopyText(string text)
+    {
+        if (!ClipboardService.TryCopy(text))
+        {
+            _notifyIcon.BalloonTipTitle = UiStrings.CopiedTitle;
+            _notifyIcon.BalloonTipText = UiStrings.CopyFailed;
+            _notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
+            _notifyIcon.ShowBalloonTip(2500);
+            return;
+        }
+
+        if (!_settings.ShowCopyNotification)
+        {
+            return;
+        }
+
+        _notifyIcon.BalloonTipTitle = UiStrings.CopiedTitle;
+        _notifyIcon.BalloonTipText = string.Format(UiStrings.CopiedText, text);
+        _notifyIcon.BalloonTipIcon = ToolTipIcon.None;
+        _notifyIcon.ShowBalloonTip(1500);
+    }
+
+    private void OpenSettings()
+    {
+        if (_settingsOpen)
+        {
+            return;
+        }
+
+        _settingsOpen = true;
+        try
+        {
+            AppSettings working = SettingsStore.Clone(_settings);
+            using var form = new SettingsForm(working);
+            if (form.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            SettingsStore.Save(working);
+            _settings = working;
+            Localization.Apply(_settings.Language);
+            ApplyTrayIcon();
+            UpdateTooltip();
+        }
+        finally
+        {
+            _settingsOpen = false;
+        }
+    }
+
+    private void OpenAbout()
+    {
+        if (_aboutOpen)
+        {
+            return;
+        }
+
+        _aboutOpen = true;
+        try
+        {
+            using var form = new AboutForm();
+            form.ShowDialog();
+        }
+        finally
+        {
+            _aboutOpen = false;
+        }
+    }
+
+    private void RefreshTrayIconIfDateChanged()
+    {
+        if (DateTime.Today == _iconDate)
+        {
+            return;
+        }
+
+        ApplyTrayIcon();
+        UpdateTooltip();
+    }
+
+    private void ApplyTrayIcon()
+    {
+        Icon previous = _icon;
+        _iconDate = DateTime.Today;
+        _icon = AppIcon.CreateForTray(_iconDate, _settings.TrayIconStyle);
+        _notifyIcon.Icon = _icon;
+        previous.Dispose();
+    }
+
+    private void UpdateTooltip()
+    {
+        string pattern = DateFormatCatalog.ResolvePattern(_settings, _settings.DefaultFormatId)
+            ?? DateFormatCatalog.BuiltIn[0].Pattern;
+        string preview = DateFormatCatalog.FormatNow(pattern);
+        string tooltip = string.Format(UiStrings.TrayTooltip, preview);
+        _notifyIcon.Text = TruncateTooltip(tooltip.Length <= 63 ? tooltip : preview);
+    }
+
+    private static string TruncateTooltip(string text)
+    {
+        return text.Length <= 63 ? text : text[..63];
+    }
+
+    protected override void ExitThreadCore()
+    {
+        _dateTimer.Stop();
+        _dateTimer.Dispose();
+        _activateWait.Unregister(null);
+        _notifyIcon.Visible = false;
+        _notifyIcon.Dispose();
+        _menu.Dispose();
+        _icon.Dispose();
+        base.ExitThreadCore();
+    }
+}

@@ -1,0 +1,24 @@
+日常调试不需要找「部署」。Visual Studio 里 WinForms 项目没有单独的「部署」页面；只有打包安装时才会用到发布/部署。
+
+只是想 F5 看托盘（多数情况）
+打开 E:\source\CopyDate\CopyDate.slnx
+解决方案资源管理器里点 CopyDate（不要点 CopyDate.Package）
+右键 → 设为启动项目（名字会变粗体）
+工具栏绿色按钮旁确认写的是 CopyDate
+按 F5
+启动后没有主窗口，到右下角托盘（或 ^ 溢出区）找日历图标。
+
+如果一定要“安装到系统里”
+这才是 MSIX 侧载，入口不叫「部署」，而叫 发布：
+
+右键 CopyDate.Package → 设为启动项目
+工具栏平台选 x64（不要 AnyCPU）
+再右键 CopyDate.Package → 发布 → 创建应用程序包…
+（英文界面是 Publish → Create App Packages...）
+另外两处也可能看到「部署」，但都不是一个设置页：
+
+菜单 生成 → 部署解决方案（只有启动项目是打包工程时才有）
+菜单 生成 → 配置管理器，表格最右一列叫 部署，给 CopyDate.Package 打勾
+第一次本机安装还要签名：双击 CopyDate.Package 里的 Package.appxmanifest → 打包 选项卡 → 选择证书，让 VS 新建测试证书。同时在 Windows 设置 → 系统 → 开发者选项 打开开发人员模式。
+
+如果你现在只是想改代码、看托盘能不能复制日期，走上面的 F5 即可，不用发布、也不用安装。
