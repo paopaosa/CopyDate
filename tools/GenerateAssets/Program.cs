@@ -32,8 +32,17 @@ internal static class Program
         WritePng(DrawSquareLogo(50), Path.Combine(packageImages, "StoreLogo.png"));
         WritePng(DrawWideLogo(620, 300), Path.Combine(packageImages, "SplashScreen.png"));
 
+        string promoDir = Path.Combine(root, "store", "promo");
+        Directory.CreateDirectory(promoDir);
+        foreach (int size in new[] { 256, 512, 1024, 2048 })
+        {
+            WritePng(DrawCalendar(size, transparent: true), Path.Combine(promoDir, $"CopyDate-icon-{size}.png"));
+            WritePng(DrawSquareLogo(size), Path.Combine(promoDir, $"CopyDate-logo-{size}.png"));
+        }
+
         Console.WriteLine($"Wrote icons to {iconDir}");
         Console.WriteLine($"Wrote package images to {packageImages}");
+        Console.WriteLine($"Wrote promo PNGs to {promoDir}");
         return 0;
     }
 
