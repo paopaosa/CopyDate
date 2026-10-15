@@ -1,4 +1,5 @@
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -13,23 +14,61 @@ internal static class AppIcon
     public static Icon Load(string? styleId = null) =>
         Create(DateTime.Today, Math.Max(32, SystemInformation.IconSize.Width), TrayIconThemes.Resolve(styleId));
 
-    public static Icon CreateForTray(DateTime date, string? styleId = null)
-    {
-        int size = Math.Max(16, SystemInformation.SmallIconSize.Width);
-        return Create(date, size, TrayIconThemes.Resolve(styleId));
-    }
+    public static int TraySize => Math.Max(16, SystemInformation.SmallIconSize.Width);
 
-    public static Bitmap CreateBitmap(DateTime date, int size, TrayIconTheme theme)
+    public static Icon CreateForTray(DateTime date, string? styleId = null) =>
+        Create(date, TraySize, TrayIconThemes.Resolve(styleId));
+
+    public static Bitmap CreateBitmap(DateTime date, int size, TrayIconTheme theme) =>
+        CreateLabelBitmap(date.Day.ToString(CultureInfo.InvariantCulture), size, theme);
+
+    public static Bitmap CreateLabelBitmap(string text, int size, TrayIconTheme theme)
     {
-        var bitmap = new Bitmap(size, size, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        var bitmap = new Bitmap(size, size, PixelFormat.Format32bppArgb);
         using Graphics g = Graphics.FromImage(bitmap);
-        Draw(g, size, date, theme);
+        Draw(g, size, text, theme);
         return bitmap;
     }
 
-    public static Icon Create(DateTime date, int size, TrayIconTheme theme)
+    public static Bitmap CreateScrollFrame(Bitmap outgoing, Bitmap incoming, int offset)
     {
-        using Bitmap bitmap = CreateBitmap(date, size, theme);
+        int size = outgoing.Width;
+        if (outgoing.Height != size || incoming.Width != size || incoming.Height != size)
+        {
+            throw new ArgumentException("Scroll frames must be square and the same size.");
+        }
+
+        offset = Math.Clamp(offset, 0, size);
+        var frame = new Bitmap(size, size, PixelFormat.Format32bppArgb);
+        var bounds = new Rectangle(0, 0, size, size);
+        BitmapData outgoingData = outgoing.LockBits(bounds, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+        BitmapData incomingData = incoming.LockBits(bounds, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+        BitmapData frameData = frame.LockBits(bounds, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+        try
+        {
+            int outgoingRows = size - offset;
+            if (outgoingRows > 0)
+            {
+                CopyRows(outgoingData, offset, frameData, 0, outgoingRows, size);
+            }
+
+            if (offset > 0)
+            {
+                CopyRows(incomingData, 0, frameData, outgoingRows, offset, size);
+            }
+        }
+        finally
+        {
+            outgoing.UnlockBits(outgoingData);
+            incoming.UnlockBits(incomingData);
+            frame.UnlockBits(frameData);
+        }
+
+        return frame;
+    }
+
+    public static Icon ToIcon(Bitmap bitmap)
+    {
         IntPtr handle = bitmap.GetHicon();
         try
         {
@@ -42,7 +81,24 @@ internal static class AppIcon
         }
     }
 
-    private static void Draw(Graphics g, int size, DateTime date, TrayIconTheme theme)
+    public static Icon Create(DateTime date, int size, TrayIconTheme theme)
+    {
+        using Bitmap bitmap = CreateBitmap(date, size, theme);
+        return ToIcon(bitmap);
+    }
+
+    private static void CopyRows(BitmapData source, int sourceY, BitmapData destination, int destinationY, int rows, int width)
+    {
+        int bytesPerRow = width * 4;
+        byte[] buffer = new byte[bytesPerRow];
+        for (int row = 0; row < rows; row++)
+        {
+            Marshal.Copy(IntPtr.Add(source.Scan0, (sourceY + row) * source.Stride), buffer, 0, bytesPerRow);
+            Marshal.Copy(buffer, 0, IntPtr.Add(destination.Scan0, (destinationY + row) * destination.Stride), bytesPerRow);
+        }
+    }
+
+    private static void Draw(Graphics g, int size, string text, TrayIconTheme theme)
     {
         g.SmoothingMode = SmoothingMode.None;
         g.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -59,7 +115,6 @@ internal static class AppIcon
             g.DrawRectangle(pen, inset, inset, size - border, size - border);
         }
 
-        string text = date.Day.ToString(CultureInfo.InvariantCulture);
         var area = new Rectangle(border + 1, border, size - (border * 2) - 1, size - (border * 2));
 
         using Font font = FitFont(g, text, area);

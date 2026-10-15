@@ -1,10 +1,17 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.0.0.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyDate", "CopyDate\CopyDate.csproj", "{B7E2A4C1-8F3D-4A91-9C2E-1D5F6A8B9C0D}"
 EndProject
 Project("{C7167F0D-BC9F-4E6B-97F3-3E1C542825F4}") = "CopyDate.Package", "CopyDate.Package\CopyDate.Package.wapproj", "{8F3C4A21-9B7E-4D12-A8F1-6C2E9D4B5A70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyDate.Tests", "CopyDate.Tests\CopyDate.Tests.csproj", "{191C7FC7-E03A-4DF8-95A6-82FA107283A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C4E8A1D2-6B37-4F90-8E15-2A9D7C0B4E61}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +29,10 @@ Global
 		{8F3C4A21-9B7E-4D12-A8F1-6C2E9D4B5A70}.Release|x64.ActiveCfg = Release|x64
 		{8F3C4A21-9B7E-4D12-A8F1-6C2E9D4B5A70}.Release|x64.Build.0 = Release|x64
 		{8F3C4A21-9B7E-4D12-A8F1-6C2E9D4B5A70}.Release|x64.Deploy.0 = Release|x64
+		{191C7FC7-E03A-4DF8-95A6-82FA107283A2}.Debug|x64.ActiveCfg = Debug|x64
+		{191C7FC7-E03A-4DF8-95A6-82FA107283A2}.Debug|x64.Build.0 = Debug|x64
+		{191C7FC7-E03A-4DF8-95A6-82FA107283A2}.Release|x64.ActiveCfg = Release|x64
+		{191C7FC7-E03A-4DF8-95A6-82FA107283A2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

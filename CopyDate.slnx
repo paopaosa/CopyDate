@@ -1,4 +1,9 @@
 <Solution>
   <Project Path="CopyDate/CopyDate.csproj" Id="b7e2a4c1-8f3d-4a91-9c2e-1d5f6a8b9c0d" />
   <Project Path="CopyDate.Package/CopyDate.Package.wapproj" Id="8f3c4a21-9b7e-4d12-a8f1-6c2e9d4b5a70" />
+  <Project Path="CopyDate.Tests/CopyDate.Tests.csproj" Id="191c7fc7-e03a-4df8-95a6-82fa107283a2" />
+  <Folder Name="/Solution Items/">
+    <File Path="CHANGELOG.md" />
+  </Folder>
 </Solution>
+

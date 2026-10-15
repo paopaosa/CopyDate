@@ -12,8 +12,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <NoWarn>$(NoWarn);WFO0003</NoWarn>
-    <Version>1.0.0</Version>
-    <InformationalVersion>1.0.0</InformationalVersion>
+    <Version>1.2.0</Version>
+    <InformationalVersion>1.2.0</InformationalVersion>
     <Product>CopyDate</Product>
     <AssemblyTitle>CopyDate</AssemblyTitle>
     <Description>Copy today's date to the clipboard from the system tray.</Description>
@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\app.ico" LogicalName="CopyDate.Assets.app.ico" />
+    <InternalsVisibleTo Include="CopyDate.Tests" />
   </ItemGroup>
 
 </Project>

@@ -7,6 +7,7 @@ internal sealed class TrayAppContext : ApplicationContext
     private readonly RegisteredWaitHandle _activateWait;
     private readonly SynchronizationContext _ui;
     private readonly NotifyIcon _notifyIcon;
+    private readonly TrayIconAnimator _copyAnimation;
     private readonly ContextMenuStrip _menu;
     private Icon _icon;
     private readonly System.Windows.Forms.Timer _dateTimer;
@@ -14,6 +15,7 @@ internal sealed class TrayAppContext : ApplicationContext
     private AppSettings _settings;
     private bool _settingsOpen;
     private bool _aboutOpen;
+    private bool _refreshIconAfterAnimation;
 
     public TrayAppContext(AppSettings settings, EventWaitHandle activateEvent)
     {
@@ -32,6 +34,7 @@ internal sealed class TrayAppContext : ApplicationContext
             Text = UiStrings.AppName
         };
         _notifyIcon.MouseClick += NotifyIconOnMouseClick;
+        _copyAnimation = new TrayIconAnimator(_notifyIcon, RestoreIconAfterCopyAnimation);
 
         UpdateTooltip();
 
@@ -121,6 +124,8 @@ internal sealed class TrayAppContext : ApplicationContext
             return;
         }
 
+        _copyAnimation.Play(_iconDate, _settings.TrayIconStyle);
+
         if (!_settings.ShowCopyNotification)
         {
             return;
@@ -193,11 +198,29 @@ internal sealed class TrayAppContext : ApplicationContext
 
     private void ApplyTrayIcon()
     {
+        if (_copyAnimation.IsRunning)
+        {
+            _refreshIconAfterAnimation = true;
+            return;
+        }
+
         Icon previous = _icon;
         _iconDate = DateTime.Today;
         _icon = AppIcon.CreateForTray(_iconDate, _settings.TrayIconStyle);
         _notifyIcon.Icon = _icon;
         previous.Dispose();
+    }
+
+    private void RestoreIconAfterCopyAnimation()
+    {
+        if (_refreshIconAfterAnimation || DateTime.Today != _iconDate)
+        {
+            _refreshIconAfterAnimation = false;
+            ApplyTrayIcon();
+            return;
+        }
+
+        _notifyIcon.Icon = _icon;
     }
 
     private void UpdateTooltip()
@@ -219,6 +242,8 @@ internal sealed class TrayAppContext : ApplicationContext
         _dateTimer.Stop();
         _dateTimer.Dispose();
         _activateWait.Unregister(null);
+        _notifyIcon.Icon = _icon;
+        _copyAnimation.Dispose();
         _notifyIcon.Visible = false;
         _notifyIcon.Dispose();
         _menu.Dispose();

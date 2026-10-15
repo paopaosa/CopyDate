@@ -9,7 +9,7 @@
   <Identity
     Name="33985EDGEMAC.CopyDate"
     Publisher="CN=A65E4F98-94ED-4BB4-8320-2348F83A81FD"
-    Version="1.0.4.0" />
+    Version="1.2.1.0" />
 
   <Properties>
     <DisplayName>Copy Date</DisplayName>
