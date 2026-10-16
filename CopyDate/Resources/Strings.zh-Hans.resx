@@ -21,7 +21,7 @@
     </xsd:element>
   </xsd:schema>
   <data name="AppName" xml:space="preserve"><value>CopyDate</value></data>
-  <data name="TrayTooltip" xml:space="preserve"><value>CopyDate — 点击复制 {0}</value></data>
+  <data name="TrayTooltip" xml:space="preserve"><value>CopyDate - 点击复制</value></data>
   <data name="CopiedTitle" xml:space="preserve"><value>CopyDate</value></data>
   <data name="CopiedText" xml:space="preserve"><value>已复制 {0}</value></data>
   <data name="CopyFailed" xml:space="preserve"><value>无法写入剪贴板，可能正被其他程序占用。</value></data>
@@ -56,6 +56,36 @@
   <data name="NameRequired" xml:space="preserve"><value>请输入名称。</value></data>
   <data name="PatternRequired" xml:space="preserve"><value>请输入格式字符串。</value></data>
   <data name="PatternHelp" xml:space="preserve"><value>使用 .NET 日期时间格式，例如 yyyy-MM-dd 或 dddd。</value></data>
+  <data name="PatternHelpButton" xml:space="preserve"><value>格式说明</value></data>
+  <data name="PatternHelpTitle" xml:space="preserve"><value>格式代码说明</value></data>
+  <data name="PatternHelpNote" xml:space="preserve"><value>单个字母和其他代码写在一起时不用加 %，例如 yyyy-M-d H:m:s。月份用大写 M，分钟用小写 m。/ 会换成系统的日期分隔符，: 会换成时间分隔符；要固定输出这些符号时，用引号包起来，例如 yyyy'-'MM'-'dd HH':'mm。</value></data>
+  <data name="FormatCode" xml:space="preserve"><value>代码</value></data>
+  <data name="FormatMeaning" xml:space="preserve"><value>说明</value></data>
+  <data name="FormatExample" xml:space="preserve"><value>示例</value></data>
+  <data name="PatternReference" xml:space="preserve"><value>yyyy-MM-dd|常用：年-月-日
+yyyy'年'M'月'd'日'|常用：中文日期，引号内原样输出
+yyyy-MM-dd HH:mm:ss|常用：日期和时间
+%d|日，1 到 31。单独书写时加 %
+dd|日，01 到 31
+ddd|星期缩写
+dddd|星期全称
+%M|月，1 到 12。单独书写时加 %
+MM|月，01 到 12
+MMM|月份缩写
+MMMM|月份全称
+yy|年份后两位
+yyyy|四位年份
+%H|小时，0 到 23。单独书写时加 %
+HH|小时，00 到 23
+%h|小时，1 到 12。单独书写时加 %
+hh|小时，01 到 12
+%m|分钟，0 到 59。单独书写时加 %
+mm|分钟，00 到 59
+%s|秒，0 到 59。单独书写时加 %
+ss|秒，00 到 59
+tt|上午或下午
+fff|毫秒，三位
+zzz|时区偏移</value></data>
   <data name="AboutTitle" xml:space="preserve"><value>关于 CopyDate</value></data>
   <data name="AboutVersion" xml:space="preserve"><value>版本 {0}</value></data>
   <data name="AboutFree" xml:space="preserve"><value>CopyDate 免费使用，不会采集数据，也不会访问网络。</value></data>
@@ -66,4 +96,11 @@
   <data name="Ok" xml:space="preserve"><value>确定</value></data>
   <data name="ConfirmDelete" xml:space="preserve"><value>删除这个自定义格式？</value></data>
   <data name="SelectCustomFormat" xml:space="preserve"><value>请先选择一个自定义格式。</value></data>
+  <data name="FormatLabelLunar" xml:space="preserve"><value>农历</value></data>
+  <data name="FormatLabelThai" xml:space="preserve"><value>佛历</value></data>
+  <data name="FormatLabelJapanese" xml:space="preserve"><value>日本年号</value></data>
+  <data name="FormatLabelTaiwan" xml:space="preserve"><value>民国纪年</value></data>
+  <data name="LunarOutOfRange" xml:space="preserve"><value>超出农历支持范围（1901–2101）</value></data>
+  <data name="JapaneseOutOfRange" xml:space="preserve"><value>超出日本年号支持范围</value></data>
+  <data name="TaiwanOutOfRange" xml:space="preserve"><value>超出民国纪年支持范围</value></data>
 </root>

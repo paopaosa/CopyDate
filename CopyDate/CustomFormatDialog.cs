@@ -57,18 +57,31 @@ internal sealed class CustomFormatDialog : Form
         layout.Controls.Add(helpLabel, 0, 3);
         layout.SetColumnSpan(helpLabel, 2);
 
-        var buttons = new FlowLayoutPanel
+        var buttons = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            AutoSize = true,
+            ColumnCount = 2,
+            RowCount = 1
+        };
+        buttons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        buttons.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        var help = new Button { Text = UiStrings.PatternHelpButton, AutoSize = true, Anchor = AnchorStyles.Left };
+        help.Click += (_, _) => PatternHelpDialog.ShowHelp(this);
+        var actions = new FlowLayoutPanel
         {
             FlowDirection = FlowDirection.RightToLeft,
-            Dock = DockStyle.Fill,
+            AutoSize = true,
             WrapContents = false,
-            AutoSize = true
+            Anchor = AnchorStyles.Right
         };
         var ok = new Button { Text = UiStrings.Ok, AutoSize = true };
         var cancel = new Button { Text = UiStrings.Cancel, DialogResult = DialogResult.Cancel, AutoSize = true };
         ok.Click += (_, _) => TryAccept();
-        buttons.Controls.Add(ok);
-        buttons.Controls.Add(cancel);
+        actions.Controls.Add(ok);
+        actions.Controls.Add(cancel);
+        buttons.Controls.Add(help, 0, 0);
+        buttons.Controls.Add(actions, 1, 0);
         layout.Controls.Add(buttons, 0, 4);
         layout.SetColumnSpan(buttons, 2);
 

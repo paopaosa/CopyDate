@@ -56,7 +56,7 @@ internal static class SettingsStore
 
     private static AppSettings Normalize(AppSettings settings)
     {
-        settings.EnabledBuiltInIds ??= [.. DateFormatCatalog.BuiltIn.Select(item => item.Id)];
+        settings.EnabledBuiltInIds ??= [.. DateFormatCatalog.DefaultEnabledIds];
         settings.CustomFormats ??= [];
         settings.Language = string.IsNullOrWhiteSpace(settings.Language)
             ? Localization.FollowSystem
@@ -72,7 +72,7 @@ internal static class SettingsStore
         }
 
         if (string.IsNullOrWhiteSpace(settings.DefaultFormatId)
-            || DateFormatCatalog.ResolvePattern(settings, settings.DefaultFormatId) is null)
+            || DateFormatCatalog.Resolve(settings, settings.DefaultFormatId) is null)
         {
             settings.DefaultFormatId = DateFormatCatalog.IsoDate;
         }

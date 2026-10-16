@@ -3,7 +3,7 @@ namespace CopyDate;
 internal sealed class AppSettings
 {
     public string DefaultFormatId { get; set; } = DateFormatCatalog.IsoDate;
-    public List<string> EnabledBuiltInIds { get; set; } = [.. DateFormatCatalog.BuiltIn.Select(item => item.Id)];
+    public List<string> EnabledBuiltInIds { get; set; } = [.. DateFormatCatalog.DefaultEnabledIds];
     public List<CustomFormat> CustomFormats { get; set; } = [];
     public string Language { get; set; } = Localization.FollowSystem;
     public string TrayIconStyle { get; set; } = TrayIconThemes.Red;

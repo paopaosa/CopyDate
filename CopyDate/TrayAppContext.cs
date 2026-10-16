@@ -88,10 +88,10 @@ internal sealed class TrayAppContext : ApplicationContext
 
         foreach (DateFormatDefinition format in DateFormatCatalog.VisibleFormats(_settings))
         {
-            string preview = DateFormatCatalog.Format(format.Pattern, now);
-            string pattern = format.Pattern;
+            string preview = DateFormatCatalog.Format(format, now);
+            string formatId = format.Id;
             var item = new ToolStripMenuItem(preview);
-            item.Click += (_, _) => CopyText(DateFormatCatalog.FormatNow(pattern));
+            item.Click += (_, _) => CopyText(DateFormatCatalog.FormatResolved(_settings, formatId, DateTime.Now));
             _menu.Items.Add(item);
         }
 
@@ -108,9 +108,7 @@ internal sealed class TrayAppContext : ApplicationContext
 
     private void CopyDefault()
     {
-        string pattern = DateFormatCatalog.ResolvePattern(_settings, _settings.DefaultFormatId)
-            ?? DateFormatCatalog.BuiltIn[0].Pattern;
-        CopyText(DateFormatCatalog.FormatNow(pattern));
+        CopyText(DateFormatCatalog.FormatResolved(_settings, _settings.DefaultFormatId, DateTime.Now));
     }
 
     private void CopyText(string text)
@@ -193,7 +191,6 @@ internal sealed class TrayAppContext : ApplicationContext
         }
 
         ApplyTrayIcon();
-        UpdateTooltip();
     }
 
     private void ApplyTrayIcon()
@@ -225,16 +222,7 @@ internal sealed class TrayAppContext : ApplicationContext
 
     private void UpdateTooltip()
     {
-        string pattern = DateFormatCatalog.ResolvePattern(_settings, _settings.DefaultFormatId)
-            ?? DateFormatCatalog.BuiltIn[0].Pattern;
-        string preview = DateFormatCatalog.FormatNow(pattern);
-        string tooltip = string.Format(UiStrings.TrayTooltip, preview);
-        _notifyIcon.Text = TruncateTooltip(tooltip.Length <= 63 ? tooltip : preview);
-    }
-
-    private static string TruncateTooltip(string text)
-    {
-        return text.Length <= 63 ? text : text[..63];
+        _notifyIcon.Text = UiStrings.TrayTooltip;
     }
 
     protected override void ExitThreadCore()

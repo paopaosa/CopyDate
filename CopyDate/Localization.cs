@@ -68,6 +68,13 @@ internal static class UiStrings
     public static string NameRequired => Get(nameof(NameRequired));
     public static string PatternRequired => Get(nameof(PatternRequired));
     public static string PatternHelp => Get(nameof(PatternHelp));
+    public static string PatternHelpButton => Get(nameof(PatternHelpButton));
+    public static string PatternHelpTitle => Get(nameof(PatternHelpTitle));
+    public static string PatternHelpNote => Get(nameof(PatternHelpNote));
+    public static string PatternReference => Get(nameof(PatternReference));
+    public static string FormatCode => Get(nameof(FormatCode));
+    public static string FormatMeaning => Get(nameof(FormatMeaning));
+    public static string FormatExample => Get(nameof(FormatExample));
     public static string AboutTitle => Get(nameof(AboutTitle));
     public static string AboutVersion => Get(nameof(AboutVersion));
     public static string AboutFree => Get(nameof(AboutFree));
@@ -78,6 +85,13 @@ internal static class UiStrings
     public static string Ok => Get(nameof(Ok));
     public static string ConfirmDelete => Get(nameof(ConfirmDelete));
     public static string SelectCustomFormat => Get(nameof(SelectCustomFormat));
+    public static string FormatLabelLunar => Get(nameof(FormatLabelLunar));
+    public static string FormatLabelThai => Get(nameof(FormatLabelThai));
+    public static string FormatLabelJapanese => Get(nameof(FormatLabelJapanese));
+    public static string FormatLabelTaiwan => Get(nameof(FormatLabelTaiwan));
+    public static string LunarOutOfRange => Get(nameof(LunarOutOfRange));
+    public static string JapaneseOutOfRange => Get(nameof(JapaneseOutOfRange));
+    public static string TaiwanOutOfRange => Get(nameof(TaiwanOutOfRange));
 
     private static string Get(string name) =>
         Manager.GetString(name, CultureInfo.CurrentUICulture) ?? name;

@@ -21,7 +21,7 @@
     </xsd:element>
   </xsd:schema>
   <data name="AppName" xml:space="preserve"><value>CopyDate</value></data>
-  <data name="TrayTooltip" xml:space="preserve"><value>CopyDate — click to copy {0}</value></data>
+  <data name="TrayTooltip" xml:space="preserve"><value>CopyDate - click to copy</value></data>
   <data name="CopiedTitle" xml:space="preserve"><value>CopyDate</value></data>
   <data name="CopiedText" xml:space="preserve"><value>Copied {0}</value></data>
   <data name="CopyFailed" xml:space="preserve"><value>Could not copy to the clipboard. It may be in use.</value></data>
@@ -56,6 +56,36 @@
   <data name="NameRequired" xml:space="preserve"><value>Please enter a name.</value></data>
   <data name="PatternRequired" xml:space="preserve"><value>Please enter a pattern.</value></data>
   <data name="PatternHelp" xml:space="preserve"><value>Use .NET date/time format strings, for example yyyy-MM-dd or dddd.</value></data>
+  <data name="PatternHelpButton" xml:space="preserve"><value>Format guide</value></data>
+  <data name="PatternHelpTitle" xml:space="preserve"><value>Format codes</value></data>
+  <data name="PatternHelpNote" xml:space="preserve"><value>When a single letter is combined with other codes, omit the %. For example: yyyy-M-d H:m:s. Use uppercase M for months and lowercase m for minutes. / becomes the system date separator and : becomes the time separator. Quote them to keep the character, for example yyyy'-'MM'-'dd HH':'mm.</value></data>
+  <data name="FormatCode" xml:space="preserve"><value>Code</value></data>
+  <data name="FormatMeaning" xml:space="preserve"><value>Meaning</value></data>
+  <data name="FormatExample" xml:space="preserve"><value>Example</value></data>
+  <data name="PatternReference" xml:space="preserve"><value>yyyy-MM-dd|Example: year-month-day
+yyyy'年'M'月'd'日'|Example: Chinese date; quoted text is copied as-is
+yyyy-MM-dd HH:mm:ss|Example: date and time
+%d|Day, 1–31. Add % when this is the whole pattern
+dd|Day, 01–31
+ddd|Abbreviated weekday
+dddd|Weekday
+%M|Month, 1–12. Add % when this is the whole pattern
+MM|Month, 01–12
+MMM|Abbreviated month
+MMMM|Month name
+yy|Year, two digits
+yyyy|Year, four digits
+%H|Hour, 0–23. Add % when this is the whole pattern
+HH|Hour, 00–23
+%h|Hour, 1–12. Add % when this is the whole pattern
+hh|Hour, 01–12
+%m|Minute, 0–59. Add % when this is the whole pattern
+mm|Minute, 00–59
+%s|Second, 0–59. Add % when this is the whole pattern
+ss|Second, 00–59
+tt|AM or PM
+fff|Milliseconds, three digits
+zzz|Time zone offset</value></data>
   <data name="AboutTitle" xml:space="preserve"><value>About CopyDate</value></data>
   <data name="AboutVersion" xml:space="preserve"><value>Version {0}</value></data>
   <data name="AboutFree" xml:space="preserve"><value>CopyDate is free. It does not collect data or access the network.</value></data>
@@ -66,4 +96,11 @@
   <data name="Ok" xml:space="preserve"><value>OK</value></data>
   <data name="ConfirmDelete" xml:space="preserve"><value>Delete this custom format?</value></data>
   <data name="SelectCustomFormat" xml:space="preserve"><value>Please select a custom format.</value></data>
+  <data name="FormatLabelLunar" xml:space="preserve"><value>Lunar</value></data>
+  <data name="FormatLabelThai" xml:space="preserve"><value>Buddhist Era</value></data>
+  <data name="FormatLabelJapanese" xml:space="preserve"><value>Japanese era</value></data>
+  <data name="FormatLabelTaiwan" xml:space="preserve"><value>Minguo</value></data>
+  <data name="LunarOutOfRange" xml:space="preserve"><value>Outside the lunar calendar range (1901–2101)</value></data>
+  <data name="JapaneseOutOfRange" xml:space="preserve"><value>Outside the Japanese era range</value></data>
+  <data name="TaiwanOutOfRange" xml:space="preserve"><value>Outside the Minguo calendar range</value></data>
 </root>

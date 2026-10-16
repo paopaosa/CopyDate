@@ -76,10 +76,11 @@ internal sealed class SettingsForm : Form
         {
             Dock = DockStyle.Fill,
             AutoSize = true,
-            ColumnCount = 4,
+            ColumnCount = 5,
             RowCount = 1
         };
         customHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        customHeader.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         customHeader.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         customHeader.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         customHeader.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
@@ -91,15 +92,18 @@ internal sealed class SettingsForm : Form
             Margin = new Padding(0, 10, 0, 6)
         }, 0, 0);
 
+        var helpButton = new Button { Text = UiStrings.PatternHelpButton, AutoSize = true, Margin = new Padding(4, 6, 0, 6) };
         var addButton = new Button { Text = UiStrings.Add, AutoSize = true, Margin = new Padding(4, 6, 0, 6) };
         var editButton = new Button { Text = UiStrings.Edit, AutoSize = true, Margin = new Padding(4, 6, 0, 6) };
         var deleteButton = new Button { Text = UiStrings.Delete, AutoSize = true, Margin = new Padding(4, 6, 0, 6) };
+        helpButton.Click += (_, _) => PatternHelpDialog.ShowHelp(this);
         addButton.Click += (_, _) => AddCustom();
         editButton.Click += (_, _) => EditCustom();
         deleteButton.Click += (_, _) => DeleteCustom();
-        customHeader.Controls.Add(addButton, 1, 0);
-        customHeader.Controls.Add(editButton, 2, 0);
-        customHeader.Controls.Add(deleteButton, 3, 0);
+        customHeader.Controls.Add(helpButton, 1, 0);
+        customHeader.Controls.Add(addButton, 2, 0);
+        customHeader.Controls.Add(editButton, 3, 0);
+        customHeader.Controls.Add(deleteButton, 4, 0);
 
         _customList = new ListView
         {
@@ -267,7 +271,7 @@ internal sealed class SettingsForm : Form
         _builtInList.Items.Clear();
         foreach (DateFormatDefinition item in DateFormatCatalog.BuiltIn)
         {
-            var entry = new FormatEntry(item.Id, item.Pattern, DateFormatCatalog.FormatNow(item.Pattern) + "    " + item.Pattern);
+            var entry = new FormatEntry(item.Id, item.Pattern, DateFormatCatalog.ListText(item));
             _builtInList.Items.Add(entry, enabled.Contains(item.Id));
         }
     }
@@ -291,7 +295,7 @@ internal sealed class SettingsForm : Form
 
         foreach (DateFormatDefinition item in DateFormatCatalog.BuiltIn)
         {
-            _defaultFormatBox.Items.Add(new FormatEntry(item.Id, item.Pattern, DateFormatCatalog.FormatNow(item.Pattern)));
+            _defaultFormatBox.Items.Add(new FormatEntry(item.Id, item.Pattern, DateFormatCatalog.Format(item, DateTime.Now)));
         }
 
         foreach (CustomFormat format in _settings.CustomFormats)
