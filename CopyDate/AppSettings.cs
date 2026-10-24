@@ -9,6 +9,7 @@ internal sealed class AppSettings
     public string TrayIconStyle { get; set; } = TrayIconThemes.Red;
     public bool StartWithWindows { get; set; }
     public bool ShowCopyNotification { get; set; } = true;
+    public bool PlayCopySoundOnDoubleClick { get; set; } = true;
 }
 
 internal sealed class CustomFormat

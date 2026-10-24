@@ -49,6 +49,7 @@
   <data name="Preview" xml:space="preserve"><value>预览</value></data>
   <data name="StartWithWindows" xml:space="preserve"><value>开机时启动</value></data>
   <data name="ShowNotification" xml:space="preserve"><value>复制后显示提示</value></data>
+  <data name="PlayCopySoundOnDoubleClick" xml:space="preserve"><value>双击复制时播放提示音</value></data>
   <data name="Save" xml:space="preserve"><value>保存</value></data>
   <data name="Cancel" xml:space="preserve"><value>取消</value></data>
   <data name="CustomFormatTitle" xml:space="preserve"><value>自定义格式</value></data>

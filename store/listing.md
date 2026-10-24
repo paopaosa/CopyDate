@@ -1,6 +1,24 @@
 # CopyDate 微软商店上架材料
 
+打包与提交步骤（手动 / 半自动、`msstore` 说明）见 [submit.md](submit.md)。
+
 提交前把 Partner Center 中的包标识（Identity Name / Publisher）同步到 `CopyDate.Package/Package.appxmanifest`。商店会在认证通过后重新签名，本地侧载才需要自己的测试证书。
+
+## 版本更新说明（Partner Center「此版本的新增功能」）
+
+### 1.2.2
+
+简体中文：
+
+双击托盘图标成功复制后，会播放一段轻柔提示音。可在设置中关闭。单击与右键菜单复制不会发声。
+
+English:
+
+Double-clicking the tray icon now plays a soft sound after a successful copy. You can turn this off in Settings. Single-click and right-click menu copies stay silent.
+
+繁體中文：
+
+按兩下工作列圖示並成功複製後，會播放一段輕柔提示音。可在設定中關閉。按一下與右鍵選單複製不會發聲。
 
 ## 基本信息
 

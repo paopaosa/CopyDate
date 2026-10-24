@@ -9,6 +9,7 @@ internal sealed class TrayAppContext : ApplicationContext
     private readonly NotifyIcon _notifyIcon;
     private readonly TrayIconAnimator _copyAnimation;
     private readonly ContextMenuStrip _menu;
+    private readonly System.Windows.Forms.Timer _leftClickTimer;
     private Icon _icon;
     private readonly System.Windows.Forms.Timer _dateTimer;
     private DateTime _iconDate;
@@ -16,6 +17,7 @@ internal sealed class TrayAppContext : ApplicationContext
     private bool _settingsOpen;
     private bool _aboutOpen;
     private bool _refreshIconAfterAnimation;
+    private bool _pendingLeftClickCopy;
 
     public TrayAppContext(AppSettings settings, EventWaitHandle activateEvent)
     {
@@ -34,7 +36,14 @@ internal sealed class TrayAppContext : ApplicationContext
             Text = UiStrings.AppName
         };
         _notifyIcon.MouseClick += NotifyIconOnMouseClick;
+        _notifyIcon.MouseDoubleClick += NotifyIconOnMouseDoubleClick;
         _copyAnimation = new TrayIconAnimator(_notifyIcon, RestoreIconAfterCopyAnimation);
+
+        _leftClickTimer = new System.Windows.Forms.Timer
+        {
+            Interval = Math.Max(50, SystemInformation.DoubleClickTime)
+        };
+        _leftClickTimer.Tick += LeftClickTimerOnTick;
 
         UpdateTooltip();
 
@@ -70,10 +79,43 @@ internal sealed class TrayAppContext : ApplicationContext
 
     private void NotifyIconOnMouseClick(object? sender, MouseEventArgs e)
     {
-        if (e.Button == MouseButtons.Left)
+        if (e.Button != MouseButtons.Left)
         {
-            CopyDefault();
+            return;
         }
+
+        _pendingLeftClickCopy = true;
+        _leftClickTimer.Stop();
+        _leftClickTimer.Start();
+    }
+
+    private void NotifyIconOnMouseDoubleClick(object? sender, MouseEventArgs e)
+    {
+        if (e.Button != MouseButtons.Left)
+        {
+            return;
+        }
+
+        CancelPendingLeftClickCopy();
+        CopyDefault(playSound: true);
+    }
+
+    private void LeftClickTimerOnTick(object? sender, EventArgs e)
+    {
+        _leftClickTimer.Stop();
+        if (!_pendingLeftClickCopy)
+        {
+            return;
+        }
+
+        _pendingLeftClickCopy = false;
+        CopyDefault(playSound: false);
+    }
+
+    private void CancelPendingLeftClickCopy()
+    {
+        _pendingLeftClickCopy = false;
+        _leftClickTimer.Stop();
     }
 
     private void MenuOnOpening(object? sender, CancelEventArgs e)
@@ -91,7 +133,7 @@ internal sealed class TrayAppContext : ApplicationContext
             string preview = DateFormatCatalog.Format(format, now);
             string formatId = format.Id;
             var item = new ToolStripMenuItem(preview);
-            item.Click += (_, _) => CopyText(DateFormatCatalog.FormatResolved(_settings, formatId, DateTime.Now));
+            item.Click += (_, _) => CopyText(DateFormatCatalog.FormatResolved(_settings, formatId, DateTime.Now), playSound: false);
             _menu.Items.Add(item);
         }
 
@@ -106,12 +148,12 @@ internal sealed class TrayAppContext : ApplicationContext
         _menu.Items.Add(UiStrings.MenuExit, null, (_, _) => ExitThread());
     }
 
-    private void CopyDefault()
+    private void CopyDefault(bool playSound)
     {
-        CopyText(DateFormatCatalog.FormatResolved(_settings, _settings.DefaultFormatId, DateTime.Now));
+        CopyText(DateFormatCatalog.FormatResolved(_settings, _settings.DefaultFormatId, DateTime.Now), playSound);
     }
 
-    private void CopyText(string text)
+    private void CopyText(string text, bool playSound)
     {
         if (!ClipboardService.TryCopy(text))
         {
@@ -123,6 +165,11 @@ internal sealed class TrayAppContext : ApplicationContext
         }
 
         _copyAnimation.Play(_iconDate, _settings.TrayIconStyle);
+
+        if (playSound && _settings.PlayCopySoundOnDoubleClick)
+        {
+            CopyFeedbackSound.Play();
+        }
 
         if (!_settings.ShowCopyNotification)
         {
@@ -227,6 +274,8 @@ internal sealed class TrayAppContext : ApplicationContext
 
     protected override void ExitThreadCore()
     {
+        CancelPendingLeftClickCopy();
+        _leftClickTimer.Dispose();
         _dateTimer.Stop();
         _dateTimer.Dispose();
         _activateWait.Unregister(null);

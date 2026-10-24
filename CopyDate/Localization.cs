@@ -61,6 +61,7 @@ internal static class UiStrings
     public static string Preview => Get(nameof(Preview));
     public static string StartWithWindows => Get(nameof(StartWithWindows));
     public static string ShowNotification => Get(nameof(ShowNotification));
+    public static string PlayCopySoundOnDoubleClick => Get(nameof(PlayCopySoundOnDoubleClick));
     public static string Save => Get(nameof(Save));
     public static string Cancel => Get(nameof(Cancel));
     public static string CustomFormatTitle => Get(nameof(CustomFormatTitle));

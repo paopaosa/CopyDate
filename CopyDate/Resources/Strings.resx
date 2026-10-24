@@ -49,6 +49,7 @@
   <data name="Preview" xml:space="preserve"><value>Preview</value></data>
   <data name="StartWithWindows" xml:space="preserve"><value>Start with Windows</value></data>
   <data name="ShowNotification" xml:space="preserve"><value>Show a notification after copying</value></data>
+  <data name="PlayCopySoundOnDoubleClick" xml:space="preserve"><value>Play a soft sound when double-click copying</value></data>
   <data name="Save" xml:space="preserve"><value>Save</value></data>
   <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="CustomFormatTitle" xml:space="preserve"><value>Custom format</value></data>

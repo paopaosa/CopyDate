@@ -9,6 +9,7 @@ internal sealed class SettingsForm : Form
     private readonly ListView _customList;
     private readonly CheckBox _startupBox;
     private readonly CheckBox _notificationBox;
+    private readonly CheckBox _soundBox;
     private readonly Button _saveButton;
     private readonly List<StylePreview> _stylePreviews = [];
 
@@ -129,6 +130,13 @@ internal sealed class SettingsForm : Form
             Text = UiStrings.ShowNotification,
             AutoSize = true,
             Checked = settings.ShowCopyNotification,
+            Margin = new Padding(0, 4, 0, 4)
+        };
+        _soundBox = new CheckBox
+        {
+            Text = UiStrings.PlayCopySoundOnDoubleClick,
+            AutoSize = true,
+            Checked = settings.PlayCopySoundOnDoubleClick,
             Margin = new Padding(0, 4, 0, 8)
         };
 
@@ -170,6 +178,7 @@ internal sealed class SettingsForm : Form
         };
         checks.Controls.Add(_startupBox);
         checks.Controls.Add(_notificationBox);
+        checks.Controls.Add(_soundBox);
         root.Controls.Add(checks, 0, 7);
         root.SetColumnSpan(checks, 2);
         root.Controls.Add(buttons, 0, 8);
@@ -376,6 +385,7 @@ internal sealed class SettingsForm : Form
             _settings.DefaultFormatId = ((FormatEntry)_defaultFormatBox.SelectedItem!).Id;
             _settings.EnabledBuiltInIds = _builtInList.CheckedItems.Cast<FormatEntry>().Select(item => item.Id).ToList();
             _settings.ShowCopyNotification = _notificationBox.Checked;
+            _settings.PlayCopySoundOnDoubleClick = _soundBox.Checked;
 
             (bool success, string? message) = await StartupService.ApplyAsync(_startupBox.Checked);
             if (!success)
